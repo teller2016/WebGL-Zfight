@@ -117,6 +117,10 @@ function initialiseShaders() {
 var flag_animation = 1; 
 function toggleAnimation()
 {
+    let button = document.getElementById("toggle_button");
+    if(button.value=="Toggle Rotate [ON]") button.value = "Toggle Rotate [OFF]"
+    else button.value = "Toggle Rotate [ON]"
+    
 	flag_animation ^= 1; 
 	console.log("flag_animation=", flag_animation);
 }
@@ -151,53 +155,6 @@ function speed_minus(){
 	console.log(`current speed: ${rotSpeed}`);
 }
 
-
-
-// function renderScene() {
-    
-//     gl.clearColor(0.6, 0.8, 1.0, 1.0);
-
-
-
-//     gl.clear(gl.COLOR_BUFFER_BIT);
-
-//     // Get the location of the transformation matrix in the shader using its name
-//     var matrixLocation = gl.getUniformLocation(gl.programObject, "transformationMatrix");
-
-//     // Matrix used to specify the orientation of the triangle on screen
-//     var transformationMatrix = [
-//         1.0, 0.0, 0.0, 0.0,
-//         0.0, 1.0, 0.0, 0.0,
-//         0.0, 0.0, 1.0, 0.0,
-//         0.0, 0.0, 0.0, 1.0
-//     ];
-
-//     // Pass the identity transformation matrix to the shader using its location
-//     gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);
-
-//     if (!testGLError("gl.uniformMatrix4fv")) {
-//         return false;
-//     }
-
-//     // Enable the user-defined vertex array
-//     gl.enableVertexAttribArray(0);
-
-//     // Set the vertex data to this attribute index, with the number of floats in each position
-//     gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 0, 0);
-
-//     if (!testGLError("gl.vertexAttribPointer")) {
-//         return false;
-//     }
-
-
-//     gl.drawArrays(gl.TRIANGLES, 0, 3);
-
-//     if (!testGLError("gl.drawArrays")) {
-//         return false;
-//     }
-
-//     return true;
-// }
 
 function main() {
 

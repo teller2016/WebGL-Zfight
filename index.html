@@ -11,7 +11,7 @@
 
 </head>
 
-<body onload="main()">
+<body style="text-align: center;" onload="main()">
 
     <header>
         <h1>Triangle Primitive with Z-fight</h1>
@@ -21,25 +21,27 @@
         <h2>Triangle</h2>
         <canvas id="triangle"style="border: none;" width="800" height="600"></canvas>
     </div>
+    <div >
+        <table style="margin-left: auto; margin-right:auto;" border="1">
+            <tr>
+                <td><label>삼각형 색 선택</label></td>
+            </tr>
+            <tr>
+                <td>
+                    <input name="color" type="radio" onclick="triangle_color='red';" checked><lable>RED<br/> 
+                    <input name="color" type="radio" onclick="triangle_color='yellow';"><lable>YELLOW<br/> 
+                    <input name="color" type="radio" onclick="triangle_color='blue';"><lable>BLUE<br/> 
+                    <input name="color" type="radio" onclick="triangle_color='green';"><lable>GREEN<br/> 
+                    
+                </td>
+            </tr>
+    
+    
+        </table>
+    </div>
+    
 
-    <table border="1">
-        <tr>
-            <td><label>삼각형 색 선택</label></td>
-        </tr>
-        <tr>
-            <td>
-                <input name="color" type="radio" onclick="triangle_color='red';" checked><lable>RED<br/> 
-                <input name="color" type="radio" onclick="triangle_color='yellow';"><lable>YELLOW<br/> 
-                <input name="color" type="radio" onclick="triangle_color='blue';"><lable>BLUE<br/> 
-                <input name="color" type="radio" onclick="triangle_color='green';"><lable>GREEN<br/> 
-                
-            </td>
-        </tr>
-
-
-    </table>
-
-    <button onclick="toggleAnimation()">Toggle Rotate</button>
+    <input type="button" id="toggle_button" onclick="toggleAnimation()" value="Toggle Rotate [ON]"/>
     <button onclick="speed_plus()"> + </button>
     <button onclick="speed_minus()"> - </button>
     <button onclick="draw_mode_line()"> Lines </button>
