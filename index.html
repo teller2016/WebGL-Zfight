@@ -20,10 +20,26 @@
     <div id="div_triangle">
         <h2>Triangle</h2>
         <canvas id="triangle"style="border: none;" width="800" height="600"></canvas>
-        <h6>( ↑ Click Anywhere ↑ )</h6>
     </div>
 
-    <button onclick="toggleAnimation()">Toggle Animation</button>
+    <table border="1">
+        <tr>
+            <td><label>삼각형 색 선택</label></td>
+        </tr>
+        <tr>
+            <td>
+                <input name="color" type="radio" onclick="triangle_color='red';" checked><lable>RED<br/> 
+                <input name="color" type="radio" onclick="triangle_color='yellow';"><lable>YELLOW<br/> 
+                <input name="color" type="radio" onclick="triangle_color='blue';"><lable>BLUE<br/> 
+                <input name="color" type="radio" onclick="triangle_color='green';"><lable>GREEN<br/> 
+                
+            </td>
+        </tr>
+
+
+    </table>
+
+    <button onclick="toggleAnimation()">Toggle Rotate</button>
     <button onclick="speed_plus()"> + </button>
     <button onclick="speed_minus()"> - </button>
     <button onclick="draw_mode_line()"> Lines </button>

@@ -114,7 +114,7 @@ function initialiseShaders() {
     return testGLError("initialiseShaders");
 }
 
-var flag_animation = 0; 
+var flag_animation = 1; 
 function toggleAnimation()
 {
 	flag_animation ^= 1; 
@@ -228,6 +228,8 @@ function main() {
 
 }
 
+var triangle_color = 'red'; //RED, YELLOW, BLUE, GREEN
+
 function callEvent(element, event, type){
     if (!initialiseGL(element)) {
         return;
@@ -240,7 +242,7 @@ function callEvent(element, event, type){
     }
 
     if(element.vertexAry == undefined)
-        element.vertexAry = [0.7, 0.7, 0.0, 1.0, 0.0, 0.0, 0.4];
+        element.vertexAry = [];
 
     if (event != null) {
         
@@ -250,64 +252,33 @@ function callEvent(element, event, type){
         x /= (Number(getComputedStyle(element).width.split("px")[0]) / 2);
         y /= (Number(getComputedStyle(element).height.split("px")[0]) / 2);
 
-        let randomColor = Math.random();
-        console.log(randomColor);
+        let colorData=[]
+        let a = 1.0;
+        switch(triangle_color){
+            case 'red':
+                colorData=[1.0, 0.0, 0.0]
+                break;
+            case 'yellow':
+                colorData=[1.0, 1.0, 0.0]
+                break;
+            case 'green':
+                colorData=[0.0, 1.0, 0.0]
+                break;
+            case 'blue':
+                colorData=[0.0, 0.0, 1.0]
+                break;    
 
-        var vertexData = [x, y, 0.0, randomColor, randomColor, randomColor, 1.0]
+        }
+        console.log(colorData);
+        console.log(triangle_color);
+
+        var vertexData = [x, y, 0.0].concat(colorData, a);
         
-        console.log(x,y);
+        //console.log(x,y);
         Array.prototype.push.apply(element.vertexAry, vertexData);
 
     }
 
-
-    // // Generate a buffer object
-    // gl.vertexBuffer = gl.createBuffer();
-    // // Bind buffer as a vertex buffer so we can fill it with data
-    // gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer);
-    // // Set the buffer's size, data and usage 
-    // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element.vertexAry), gl.STATIC_DRAW);
-
-    // gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    // gl.clearDepth(1.0);	
-    // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    // gl.enable(gl.DEPTH_TEST);	
-
-    // var matrixLocation = gl.getUniformLocation(gl.programObject, "transformationMatrix");
-    // var transformationMatrix = mat4.create();
-
-    // mat4.rotateY(transformationMatrix, transformationMatrix, yRot); //수정 - y축으로 30도회전
-
-    // if (flag_animation == 0){
-	// 	xRot += 0.01* rotSpeed;// 수정
-	// 	yRot += 0.01* 3;
-	// 	zRot += 0.01* rotSpeed;
-	// }
-
-    // gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);
-
-    // if (!testGLError("gl.uniformMatrix4fv")) {
-    //     return false;
-    // }
-
-    // gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer);
-    // // Enable the user-defined vertex array
-    // gl.enableVertexAttribArray(0);
-    // // Set the vertex data to this attribute index, with the number of floats in each position
-    // gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 28, 0);
-    // gl.enableVertexAttribArray(1);
-    // gl.vertexAttribPointer(1, 4, gl.FLOAT, gl.FALSE, 28, 12);
-
-    // if (!testGLError("gl.vertexAttribPointer")) {
-    //     return false;
-    // }
-
-    // gl.drawArrays(type, 0, element.vertexAry.length / 7);
-    // if (!testGLError("gl.drawArrays")) {
-    //     return false;
-    // }
-    
-    // return true;
 }
 
 function loop(element, type){
