@@ -117,10 +117,12 @@ function initialiseShaders() {
 var flag_animation = 1; 
 function toggleAnimation()
 {
+    draw_flag = false;
+    console.log(draw_flag);
     let button = document.getElementById("toggle_button");
     if(button.value=="Toggle Rotate [ON]") button.value = "Toggle Rotate [OFF]"
     else button.value = "Toggle Rotate [ON]"
-    
+
 	flag_animation ^= 1; 
 	console.log("flag_animation=", flag_animation);
 }
@@ -156,6 +158,10 @@ function speed_minus(){
 }
 
 
+var triangle_color = 'red'; //RED, YELLOW, BLUE, GREEN
+var draw_flag = true;
+
+
 function main() {
 
     var triangle = document.getElementById("triangle");
@@ -164,9 +170,9 @@ function main() {
     callEvent(triangle);
 
     triangle.addEventListener("click", function(event){
-        callEvent(this, event, gl.TRIANGLES);
+        if(draw_flag)
+            callEvent(this, event, gl.TRIANGLES);
     });
-
 
 
     requestAnimFrame = (function () {
@@ -185,7 +191,6 @@ function main() {
 
 }
 
-var triangle_color = 'red'; //RED, YELLOW, BLUE, GREEN
 
 function callEvent(element, event, type){
     if (!initialiseGL(element)) {
