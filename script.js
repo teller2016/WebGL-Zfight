@@ -127,49 +127,54 @@ function toggleAnimation()
 	console.log("flag_animation=", flag_animation);
 }
 
-var xRot = 0.0;
 var yRot = 0.0;
-var zRot = 0.0;
-
-var draw_mode = 4;
-
-function draw_mode_line(){
-	draw_mode = 3;
-}
-function draw_mode_triangle(){
-	draw_mode = 4;
-}
-function draw_mode_point(){
-	draw_mode = 0;
-}
-
-var rotSpeed = 0.1;
-
-//속도 함수
-function speed_plus(){
-	rotSpeed += 0.1;
-	console.log(`current speed: ${rotSpeed}`);
-}
-function speed_minus(){
-	rotSpeed -= 0.1;
-	if (rotSpeed < 0)
-		rotSpeed = 0
-	console.log(`current speed: ${rotSpeed}`);
-}
 
 
 var triangle_color = 'red'; //RED, YELLOW, BLUE, GREEN
 var draw_flag = true;
 
+var r = 1.0;
+var g = 0.0;
+var b = 0.0;
+var a = 1.0;
+
+function changeRGBA(){
+    let red = document.getElementById('red');
+    let green = document.getElementById('green');
+    let blue = document.getElementById('blue');
+    let alpha = document.getElementById('alpha');
+
+
+    let redValue = document.getElementById('redValue');
+    let greenValue = document.getElementById('greenValue');
+    let blueValue = document.getElementById('blueValue');
+    let alphaValue = document.getElementById('alphaValue');
+
+
+    redValue.innerHTML=red.value;
+    greenValue.innerHTML=green.value;
+    blueValue.innerHTML=blue.value;
+    alphaValue.innerHTML=alpha.value;
+
+    let colorBox = document.getElementById('colorBox');
+    colorBox.style.backgroundColor="rgba("+red.value+","+green.value+","+blue.value+","+alpha.value+")";
+
+    r = red.value/255;
+    g = green.value/255;
+    b = blue.value/255;
+    a = alpha.value;
+
+}
+
 
 function main() {
 
-    var triangle = document.getElementById("triangle");
+    var canvas = document.getElementById("canvas");
 
     // initialisze canvas
-    callEvent(triangle);
+    callEvent(canvas);
 
-    triangle.addEventListener("click", function(event){
+    canvas.addEventListener("click", function(event){
         if(draw_flag)
             callEvent(this, event, gl.TRIANGLES);
     });
@@ -183,7 +188,7 @@ function main() {
     })();
     
     (function renderLoop() {
-        if (loop(triangle,gl.TRIANGLES)) {
+        if (loop(canvas,gl.TRIANGLES)) {
             requestAnimFrame(renderLoop);
         }
     })();
@@ -207,34 +212,17 @@ function callEvent(element, event, type){
         element.vertexData = [];
 
     if (event != null) {
+
+        let canvasWidth = document.getElementById('canvas').width;
+        let canvasHeight = document.getElementById('canvas').height;
         
-        x = event.offsetX - (Number(getComputedStyle(element).width.split("px")[0]) / 2);
-        y = -event.offsetY + (Number(getComputedStyle(element).height.split("px")[0]) / 2);
-        
-        x /= (Number(getComputedStyle(element).width.split("px")[0]) / 2);
-        y /= (Number(getComputedStyle(element).height.split("px")[0]) / 2);
+        x = event.offsetX - canvasWidth / 2;
+        y = -event.offsetY + canvasHeight / 2;
 
-        let colorData=[]
-        let a = 1.0;
-        switch(triangle_color){
-            case 'red':
-                colorData=[1.0, 0.0, 0.0]
-                break;
-            case 'yellow':
-                colorData=[1.0, 1.0, 0.0]
-                break;
-            case 'green':
-                colorData=[0.0, 1.0, 0.0]
-                break;
-            case 'blue':
-                colorData=[0.0, 0.0, 1.0]
-                break;    
+        x /= canvasWidth / 2;
+        y /=  canvasHeight / 2;
 
-        }
-        //console.log(colorData);
-        //console.log(triangle_color);
-
-        var vertexData = [x, y, 0.0].concat(colorData, a);
+        var vertexData = [x, y, 0.0, r, g, b, a];
         
         //console.log(x,y);
         Array.prototype.push.apply(element.vertexData, vertexData);
@@ -264,9 +252,7 @@ function loop(element, type){
     mat4.rotateY(transformationMatrix, transformationMatrix, yRot); //수정 - y축으로 30도회전
 
     if (flag_animation == 0){
-		xRot += 0.01* rotSpeed;// 수정
 		yRot += 0.01* 3;
-		zRot += 0.01* rotSpeed;
 	}
 
     gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);

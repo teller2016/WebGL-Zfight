@@ -4,6 +4,7 @@
 <title>WebGLProject - 201620920</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
+<link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="gl-matrix.js"> </script>
 <script type="text/javascript" src="script.js">
 </script>
@@ -17,36 +18,68 @@
         <h1>Triangle Primitive with Z-fight</h1>
     </header>
 
-    <div id="div_triangle">
-        <h2>Triangle</h2>
-        <canvas id="triangle"style="border: none;" width="800" height="600"></canvas>
+    <div>
+        <canvas id="canvas"style="border: none;" width="800" height="600"></canvas>
     </div>
     <div >
-        <table style="margin-left: auto; margin-right:auto;" border="1">
+        <div>
+            
+
+            
+
+        </div>
+        
+        <table style="text-align: center; margin-left: auto; margin-right:auto;" border="1">
+            
             <tr>
-                <td><label>삼각형 색 선택</label></td>
+                <td><label>Choose Vertex Color</label></td>
             </tr>
             <tr>
                 <td>
-                    <input name="color" type="radio" onclick="triangle_color='red';" checked><lable>RED<br/> 
-                    <input name="color" type="radio" onclick="triangle_color='yellow';"><lable>YELLOW<br/> 
-                    <input name="color" type="radio" onclick="triangle_color='blue';"><lable>BLUE<br/> 
-                    <input name="color" type="radio" onclick="triangle_color='green';"><lable>GREEN<br/> 
-                    
+
+                    <div id="colorBox" style="height: 35px; background-color: rgba(255, 0, 0, 1.0);">
+                        </div>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <div style="display:flex; flex-direction: row;">
+                
+
+                        <div class="color_name_box">
+                            <h3>Red</h1>
+                            <input onchange="changeRGBA()" oninput="changeRGBA()" id="red" value="255" min="0" max="255" type="range">
+                            <div id="redValue">255</div>
+                        </div>
+                        <div class="color_name_box">
+                            <h3>Green</h1>
+                            <input onchange="changeRGBA()" oninput="changeRGBA()" id="green" value="0" min="0" max="255" type="range">
+                            <div id="greenValue">0</div>
+                        </div>
+                        <div class="color_name_box">
+                            <h3>Blue</h1>
+                            <input onchange="changeRGBA()" oninput="changeRGBA()" id="blue" value="0" min="0" max="255" type="range">
+                            <div id="blueValue">0</div>
+                        </div>
+                        <div class="color_name_box">
+                            <h3>Alpha</h1>
+                            <input onchange="changeRGBA()" oninput="changeRGBA()" id="alpha" value="1.0" min="0.0" max="1.0" step="0.1" type="range">
+                            <div id="alphaValue">0</div>
+                        </div>
+        
+                    </div>
+
                 </td>
             </tr>
     
     
         </table>
     </div>
-    
-    <input type="button" value="Redraw" onClick="window.location.reload()">
     <input type="button" id="toggle_button" onclick="toggleAnimation()" value="Toggle Rotate [ON]"/>
-    <button onclick="speed_plus()"> + </button>
-    <button onclick="speed_minus()"> - </button>
-    <button onclick="draw_mode_line()"> Lines </button>
-    <button onclick="draw_mode_triangle()"> Triangles </button>
-    <button onclick="draw_mode_point()"> Points </button>
+
+    <input type="button" value="Redraw" onClick="window.location.reload()">
+ 
 </body>
 
 </html>
