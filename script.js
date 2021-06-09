@@ -318,23 +318,32 @@ function loop(element, type){
 
     gl.disable(gl.POLYGON_OFFSET_FILL);  
 
-    let count = element.vertexData.length;
+    let count = element.vertexData.length / 7; //그릴 수 있는 vertex 개수
 
-    let units = 1.0
+    let unit = 1.0;
+    if(!flag_offset_status) //offset negative인 경우
+        unit = -1.0;
 
     //drawArrays...
-    gl.drawArrays(gl.POINTS, 0, count / 7); // 점 찍기
+    gl.drawArrays(gl.POINTS, 0, count); // 점 찍기
 
-    gl.drawArrays(type, 0, 3);
+    if(count>=3)
+        gl.drawArrays(type, 0, 3);
     
-    if(flag_offset)
+    if(flag_offset) // OFFSET 상태
         gl.enable(gl.POLYGON_OFFSET_FILL);  
-    gl.polygonOffset(-0.1, -1.0); 
-    gl.drawArrays(type, 3, 3);
 
-    gl.polygonOffset(-0.2, -1.0);
+    if(count>=6){
+        gl.polygonOffset(unit*0.1, unit*1.0); 
+        gl.drawArrays(type, 3, 3);
+    }
+    
+    if(count>=9){
+        gl.polygonOffset(unit*0.2, unit*1.0);
+        gl.drawArrays(type,6,3);
+    }
 
-    gl.drawArrays(type,6,3);
+    
 
 
     //gl.drawArrays(type, 0, element.vertexData.length / 7);
