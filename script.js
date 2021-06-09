@@ -167,18 +167,34 @@ function changeRGBA(){
 
 }
 
-var firstZ = 0.0;
-var secondZ = 0.0;
-var thirdZ = 0.0;
+var one_Z = 0.0;
+var two_Z = 0.0;
+var three_Z = 0.0;
+var four_Z = 0.0;
+var five_Z = 0.0;
 
 var flag_offset=false;
 var flag_offset_status=false;
 
 var count = 0;
 
-function incFirstZ(){
-    firstZ+=0.05;
-    console.log(firstZ);
+function increaseZ(val){
+    switch(val){
+        case 1:one_Z+=0.05; break;
+        case 2:two_Z+=0.05; break;
+        case 3:three_Z+=0.05; break;
+        case 4:four_Z+=0.05; break;
+        case 5:five_Z+=0.05; break;
+    }
+}
+function decreaseZ(val){
+    switch(val){
+        case 1:one_Z-=0.05; break;
+        case 2:two_Z-=0.05; break;
+        case 3:three_Z-=0.05; break;
+        case 4:four_Z-=0.05; break;
+        case 5:five_Z-=0.05; break;
+    }
 }
 
 function toggleOffset(){
@@ -203,6 +219,15 @@ function changeOffsetStatus(){
     console.log('Offset Status ->'+flag_offset_status);
 }
 
+function showButton(num){
+    if(num==0) return;
+    console.log(num);
+
+    document.getElementById('inc_'+num).style.display='block';
+    document.getElementById('dec_'+num).style.display='block';
+
+}
+
 function main() {
 
     var canvas = document.getElementById("canvas");
@@ -212,8 +237,15 @@ function main() {
 
     canvas.addEventListener("click", function(event){
         //callEvent(this, event, gl.TRIANGLES);
-        if(draw_flag)
+        if(draw_flag){
+            count++;
+            if(count==15){
+                document.getElementById('warning').style.display = 'block';
+            }
+            showButton(parseInt(count/3));
             callEvent(this, event, gl.TRIANGLES);
+
+        }
         else
             alert('To draw rotation needs to stop')
                 
@@ -301,7 +333,7 @@ function loop(element, type){
     }
 
     mat4.rotateY(mMat, mMat, yRot); 
-    mat4.translate(mMat, mMat,[0.0, 0.0, firstZ, 0.0]);
+    //mat4.translate(mMat, mMat,[0.0, 0.0, one_Z, 0.0]);
     //mat4.lookAt(vMat, [1.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0]);
     //mat4.perspective(pMat, 3.64/2.0, 800.0/600.0, 0.5, 9);
 
@@ -328,7 +360,7 @@ function loop(element, type){
 
     gl.disable(gl.POLYGON_OFFSET_FILL);  
 
-    count = element.vertexData.length / 7; //그릴 수 있는 vertex 개수
+    //count = element.vertexData.length / 7; //그릴 수 있는 vertex 개수
 
     let unit = 1.0;
     if(!flag_offset_status) //offset negative인 경우
@@ -337,8 +369,12 @@ function loop(element, type){
     //drawArrays...
     gl.drawArrays(gl.POINTS, 0, count); // 점 찍기
 
-    if(count>=3)
+    if(count>=3){
+        //mat4.identity(mMat);  
+        //mat4.translate(mMat, mMat, [0.0, 0.0, one_Z, 0.0]);
+        //gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type, 0, 3);
+    }
     
     if(flag_offset) // OFFSET 상태
         gl.enable(gl.POLYGON_OFFSET_FILL);  

@@ -2,6 +2,10 @@
     width:33.3%;
 }
 
+.hide{
+    display: none;
+}
+
 /* The switch - the box around the slider */
 .switch {
     position: relative;

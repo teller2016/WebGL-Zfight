@@ -23,9 +23,22 @@
     </div>
     <div >
         <div>
+            <div id='warning' style="color: red; display: none;">삼각형은 5개까지만 생성 가능합니다!</div>
             
-            <input type="button" id="inc_first" onclick="incFirstZ()" value="+ first triangle Z"/>
+            <input class="hide" type="button" id="inc_1" onclick="increaseZ(1)" value="#1 triangle +Z"/>
+            <input class="hide" type="button" id="dec_1" onclick="decreaseZ(1)" value="#1 triangle -Z"/>
             
+            <input class="hide" type="button" id="inc_2" onclick="increaseZ(2)" value="#2 triangle +Z"/>
+            <input class="hide" type="button" id="dec_2" onclick="decreaseZ(2)" value="#2 triangle -Z"/>
+
+            <input class="hide" type="button" id="inc_3" onclick="increaseZ(3)" value="#3 triangle +Z"/>
+            <input class="hide" type="button" id="dec_3" onclick="decreaseZ(3)" value="#3 triangle -Z"/>
+
+            <input class="hide" type="button" id="inc_4" onclick="increaseZ(4)" value="#4 triangle +Z"/>
+            <input class="hide" type="button" id="dec_4" onclick="decreaseZ(4)" value="#4 triangle -Z"/>
+
+            <input class="hide" type="button" id="inc_5" onclick="increaseZ(5)" value="#5 triangle +Z"/>
+            <input class="hide" type="button" id="dec_5" onclick="decreaseZ(5)" value="#5 triangle -Z"/>
 
         </div>
         
