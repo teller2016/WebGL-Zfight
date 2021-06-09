@@ -78,7 +78,7 @@ function initialiseShaders() {
 			void main(void)  
 			{ 
 				gl_Position = transformationMatrix * myVertex; 
-                gl_PointSize = 20.0;
+                gl_PointSize = 3.0;
                 col = myColor;
 			}`;
 
@@ -114,102 +114,70 @@ function initialiseShaders() {
     return testGLError("initialiseShaders");
 }
 
-var flag_animation = 0; 
+var flag_animation = 1; 
 function toggleAnimation()
 {
+    draw_flag = false;
+    console.log(draw_flag);
+    let button = document.getElementById("toggle_button");
+    if(button.value=="Toggle Rotate [ON]") button.value = "Toggle Rotate [OFF]"
+    else button.value = "Toggle Rotate [ON]"
+
 	flag_animation ^= 1; 
 	console.log("flag_animation=", flag_animation);
 }
 
-var xRot = 0.0;
 var yRot = 0.0;
-var zRot = 0.0;
 
-var draw_mode = 4;
 
-function draw_mode_line(){
-	draw_mode = 3;
+var triangle_color = 'red'; //RED, YELLOW, BLUE, GREEN
+var draw_flag = true;
+
+var r = 1.0;
+var g = 0.0;
+var b = 0.0;
+var a = 1.0;
+
+function changeRGBA(){
+    let red = document.getElementById('red');
+    let green = document.getElementById('green');
+    let blue = document.getElementById('blue');
+    let alpha = document.getElementById('alpha');
+
+
+    let redValue = document.getElementById('redValue');
+    let greenValue = document.getElementById('greenValue');
+    let blueValue = document.getElementById('blueValue');
+    let alphaValue = document.getElementById('alphaValue');
+
+
+    redValue.innerHTML=red.value;
+    greenValue.innerHTML=green.value;
+    blueValue.innerHTML=blue.value;
+    alphaValue.innerHTML=alpha.value;
+
+    let colorBox = document.getElementById('colorBox');
+    colorBox.style.backgroundColor="rgba("+red.value+","+green.value+","+blue.value+","+alpha.value+")";
+
+    r = red.value/255;
+    g = green.value/255;
+    b = blue.value/255;
+    a = alpha.value;
+
 }
-function draw_mode_triangle(){
-	draw_mode = 4;
-}
-function draw_mode_point(){
-	draw_mode = 0;
-}
 
-var rotSpeed = 0.1;
-
-//속도 함수
-function speed_plus(){
-	rotSpeed += 0.1;
-	console.log(`current speed: ${rotSpeed}`);
-}
-function speed_minus(){
-	rotSpeed -= 0.1;
-	if (rotSpeed < 0)
-		rotSpeed = 0
-	console.log(`current speed: ${rotSpeed}`);
-}
-
-
-
-function renderScene() {
-    
-    gl.clearColor(0.6, 0.8, 1.0, 1.0);
-
-
-
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    // Get the location of the transformation matrix in the shader using its name
-    var matrixLocation = gl.getUniformLocation(gl.programObject, "transformationMatrix");
-
-    // Matrix used to specify the orientation of the triangle on screen
-    var transformationMatrix = [
-        1.0, 0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0,
-        0.0, 0.0, 0.0, 1.0
-    ];
-
-    // Pass the identity transformation matrix to the shader using its location
-    gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);
-
-    if (!testGLError("gl.uniformMatrix4fv")) {
-        return false;
-    }
-
-    // Enable the user-defined vertex array
-    gl.enableVertexAttribArray(0);
-
-    // Set the vertex data to this attribute index, with the number of floats in each position
-    gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 0, 0);
-
-    if (!testGLError("gl.vertexAttribPointer")) {
-        return false;
-    }
-
-
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-
-    if (!testGLError("gl.drawArrays")) {
-        return false;
-    }
-
-    return true;
-}
 
 function main() {
 
-    var triangle = document.getElementById("triangle");
+    var canvas = document.getElementById("canvas");
 
     // initialisze canvas
-    callEvent(triangle);
+    callEvent(canvas);
 
-    triangle.addEventListener("click", function(event){
-        callEvent(this, event, gl.TRIANGLES);
+    canvas.addEventListener("click", function(event){
+        if(draw_flag)
+            callEvent(this, event, gl.TRIANGLES);
     });
-
 
 
     requestAnimFrame = (function () {
@@ -220,13 +188,14 @@ function main() {
     })();
     
     (function renderLoop() {
-        if (loop(triangle,gl.TRIANGLES)) {
+        if (loop(canvas,gl.TRIANGLES)) {
             requestAnimFrame(renderLoop);
         }
     })();
 
 
 }
+
 
 function callEvent(element, event, type){
     if (!initialiseGL(element)) {
@@ -239,75 +208,27 @@ function callEvent(element, event, type){
         return;
     }
 
-    if(element.vertexAry == undefined)
-        element.vertexAry = [0.7, 0.7, 0.0, 1.0, 0.0, 0.0, 0.4];
+    if(element.vertexData == undefined)
+        element.vertexData = [];
 
     if (event != null) {
-        
-        x = event.offsetX - (Number(getComputedStyle(element).width.split("px")[0]) / 2);
-        y = -event.offsetY + (Number(getComputedStyle(element).height.split("px")[0]) / 2);
-        
-        x /= (Number(getComputedStyle(element).width.split("px")[0]) / 2);
-        y /= (Number(getComputedStyle(element).height.split("px")[0]) / 2);
 
-        let randomColor = Math.random();
-        console.log(randomColor);
-
-        var vertexData = [x, y, 0.0, randomColor, randomColor, randomColor, 1.0]
+        let canvasWidth = document.getElementById('canvas').width;
+        let canvasHeight = document.getElementById('canvas').height;
         
-        console.log(x,y);
-        Array.prototype.push.apply(element.vertexAry, vertexData);
+        x = event.offsetX - canvasWidth / 2;
+        y = -event.offsetY + canvasHeight / 2;
+
+        x /= canvasWidth / 2;
+        y /=  canvasHeight / 2;
+
+        var vertexData = [x, y, 0.0, r, g, b, a];
+        
+        //console.log(x,y);
+        Array.prototype.push.apply(element.vertexData, vertexData);
 
     }
 
-
-    // // Generate a buffer object
-    // gl.vertexBuffer = gl.createBuffer();
-    // // Bind buffer as a vertex buffer so we can fill it with data
-    // gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer);
-    // // Set the buffer's size, data and usage 
-    // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element.vertexAry), gl.STATIC_DRAW);
-
-    // gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    // gl.clearDepth(1.0);	
-    // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    // gl.enable(gl.DEPTH_TEST);	
-
-    // var matrixLocation = gl.getUniformLocation(gl.programObject, "transformationMatrix");
-    // var transformationMatrix = mat4.create();
-
-    // mat4.rotateY(transformationMatrix, transformationMatrix, yRot); //수정 - y축으로 30도회전
-
-    // if (flag_animation == 0){
-	// 	xRot += 0.01* rotSpeed;// 수정
-	// 	yRot += 0.01* 3;
-	// 	zRot += 0.01* rotSpeed;
-	// }
-
-    // gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);
-
-    // if (!testGLError("gl.uniformMatrix4fv")) {
-    //     return false;
-    // }
-
-    // gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer);
-    // // Enable the user-defined vertex array
-    // gl.enableVertexAttribArray(0);
-    // // Set the vertex data to this attribute index, with the number of floats in each position
-    // gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 28, 0);
-    // gl.enableVertexAttribArray(1);
-    // gl.vertexAttribPointer(1, 4, gl.FLOAT, gl.FALSE, 28, 12);
-
-    // if (!testGLError("gl.vertexAttribPointer")) {
-    //     return false;
-    // }
-
-    // gl.drawArrays(type, 0, element.vertexAry.length / 7);
-    // if (!testGLError("gl.drawArrays")) {
-    //     return false;
-    // }
-    
-    // return true;
 }
 
 function loop(element, type){
@@ -318,7 +239,7 @@ function loop(element, type){
     // Bind buffer as a vertex buffer so we can fill it with data
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer);
     // Set the buffer's size, data and usage 
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element.vertexAry), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element.vertexData), gl.STATIC_DRAW);
 
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.clearDepth(1.0);	
@@ -331,9 +252,7 @@ function loop(element, type){
     mat4.rotateY(transformationMatrix, transformationMatrix, yRot); //수정 - y축으로 30도회전
 
     if (flag_animation == 0){
-		xRot += 0.01* rotSpeed;// 수정
 		yRot += 0.01* 3;
-		zRot += 0.01* rotSpeed;
 	}
 
     gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);
@@ -354,7 +273,8 @@ function loop(element, type){
         return false;
     }
 
-    gl.drawArrays(type, 0, element.vertexAry.length / 7);
+    gl.drawArrays(gl.POINTS, 0, element.vertexData.length / 7);
+    gl.drawArrays(type, 0, element.vertexData.length / 7);
     if (!testGLError("gl.drawArrays")) {
         return false;
     }
