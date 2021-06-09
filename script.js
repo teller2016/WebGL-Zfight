@@ -127,7 +127,7 @@ function toggleRotation()
     }
 
 	flag_rotation ^= 1; 
-	console.log("flag_animation=", flag_rotation);
+	console.log("flag_rotation=", flag_rotation);
 }
 
 var yRot = 0.0;
@@ -367,7 +367,8 @@ function loop(element, type){
         unit = -1.0;
 
     //drawArrays...
-    //gl.drawArrays(gl.POINTS, 0, count); // 점 찍기
+    if(flag_rotation)
+        gl.drawArrays(gl.POINTS, 0, count); // 점 찍기
 
     if(count>=3){
         mat4.identity(mMat);  
@@ -375,7 +376,7 @@ function loop(element, type){
         mat4.translate(mMat, mMat, [0.0, 0.0, one_Z, 0.0]);
         gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type, 0, 3);
-        gl.drawArrays(gl.POINTS, 0, 3);
+        //gl.drawArrays(gl.POINTS, 0, 3);
     }
     
     if(flag_offset) // OFFSET 상태
@@ -389,7 +390,7 @@ function loop(element, type){
         mat4.translate(mMat, mMat, [0.0, 0.0, two_Z, 0.0]);
         gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type, 3, 3);
-        gl.drawArrays(gl.POINTS, 3, 3);
+        //gl.drawArrays(gl.POINTS, 3, 3);
     }
     
     if(count>=9){
@@ -400,7 +401,7 @@ function loop(element, type){
         mat4.translate(mMat, mMat, [0.0, 0.0, three_Z, 0.0]);
         gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type,6,3);
-        gl.drawArrays(gl.POINTS, 6, 3);
+        //gl.drawArrays(gl.POINTS, 6, 3);
 
     }
 
@@ -412,7 +413,7 @@ function loop(element, type){
         mat4.translate(mMat, mMat, [0.0, 0.0, four_Z, 0.0]);
         gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type,9,3);
-        gl.drawArrays(gl.POINTS, 9, 3);
+        //gl.drawArrays(gl.POINTS, 9, 3);
 
     }
 
@@ -424,7 +425,7 @@ function loop(element, type){
         mat4.translate(mMat, mMat, [0.0, 0.0, five_Z, 0.0]);
         gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type,12,3);
-        gl.drawArrays(gl.POINTS, 12, 3);
+        //gl.drawArrays(gl.POINTS, 12, 3);
 
     }
     

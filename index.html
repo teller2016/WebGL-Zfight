@@ -12,36 +12,17 @@
 
 </head>
 
-<body style="text-align: center;" onload="main()">
+<body onload="main()">
 
     <header>
         <h1>Triangle Primitive with Z-fight</h1>
     </header>
 
-    <div>
-        <canvas id="canvas"style="border: none;" width="800" height="600"></canvas>
-    </div>
-    <div >
-        <div>
-            <div id='warning' style="color: red; display: none;">삼각형은 5개까지만 생성 가능합니다!</div>
-            
-            <input class="hide" type="button" id="inc_1" onclick="increaseZ(1)" value="#1 triangle +Z"/>
-            <input class="hide" type="button" id="dec_1" onclick="decreaseZ(1)" value="#1 triangle -Z"/>
-            
-            <input class="hide" type="button" id="inc_2" onclick="increaseZ(2)" value="#2 triangle +Z"/>
-            <input class="hide" type="button" id="dec_2" onclick="decreaseZ(2)" value="#2 triangle -Z"/>
+    <div style="display:flex; flex-direction:row;">
+    
+        <div style="width:800">
+            <canvas id="canvas"style="border: none;" width="800" height="600"></canvas>
 
-            <input class="hide" type="button" id="inc_3" onclick="increaseZ(3)" value="#3 triangle +Z"/>
-            <input class="hide" type="button" id="dec_3" onclick="decreaseZ(3)" value="#3 triangle -Z"/>
-
-            <input class="hide" type="button" id="inc_4" onclick="increaseZ(4)" value="#4 triangle +Z"/>
-            <input class="hide" type="button" id="dec_4" onclick="decreaseZ(4)" value="#4 triangle -Z"/>
-
-            <input class="hide" type="button" id="inc_5" onclick="increaseZ(5)" value="#5 triangle +Z"/>
-            <input class="hide" type="button" id="dec_5" onclick="decreaseZ(5)" value="#5 triangle -Z"/>
-
-        </div>
-        
         <table style="text-align: center; margin-left: auto; margin-right:auto;" border="1">
             
             <tr>
@@ -91,6 +72,90 @@
     
     
         </table>
+
+        </div>
+
+        <div>
+            <table style="text-align: center; margin-left: auto; margin-right:auto;" border="1">
+            
+                <tr>
+                    <td><label>Rotation</label></td>
+                    <td>
+                        <div>
+                            <label class="switch" >
+                                <input type="checkbox" onclick="toggleRotation()">
+                                <span class="slider round"></span>
+                              </label>
+                              <p id="rotation_button">OFF</p>
+                            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Polygon Offset</label></td>
+                    <td>
+                        <div>
+                        <label class="switch" >
+                            <input type="checkbox" onclick="toggleOffset()">
+                            <span class="slider round"></span>
+                          </label>
+                          <p id="offset_button">OFF</p>
+                        </div>
+                    </td>
+                    <td><label>Offset Status</label></td>
+                    <td>
+                        <div>
+                        <label class="switch" >
+                            <input type="checkbox" onclick="changeOffsetStatus()">
+                            <span class="slider round"></span>
+                          </label>
+                          <p id="offsetStatus_button">Negative</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Rotation</label></td>
+                    <td>
+                        <div>
+                            <label class="switch" >
+                                <input type="checkbox" onclick="toggleRotation()">
+                                <span class="slider round"></span>
+                              </label>
+                              <p id="rotation_button">OFF</p>
+                            </div>
+                    </td>
+                </tr>
+        
+        
+            </table>
+
+        </div>
+        
+
+
+    </div>
+
+    <div>
+        <div>
+            <div id='warning' style="color: red; display: none;">삼각형은 5개까지만 생성 가능합니다!</div>
+            
+            <input class="hide" type="button" id="inc_1" onclick="increaseZ(1)" value="#1 triangle +Z"/>
+            <input class="hide" type="button" id="dec_1" onclick="decreaseZ(1)" value="#1 triangle -Z"/>
+            
+            <input class="hide" type="button" id="inc_2" onclick="increaseZ(2)" value="#2 triangle +Z"/>
+            <input class="hide" type="button" id="dec_2" onclick="decreaseZ(2)" value="#2 triangle -Z"/>
+
+            <input class="hide" type="button" id="inc_3" onclick="increaseZ(3)" value="#3 triangle +Z"/>
+            <input class="hide" type="button" id="dec_3" onclick="decreaseZ(3)" value="#3 triangle -Z"/>
+
+            <input class="hide" type="button" id="inc_4" onclick="increaseZ(4)" value="#4 triangle +Z"/>
+            <input class="hide" type="button" id="dec_4" onclick="decreaseZ(4)" value="#4 triangle -Z"/>
+
+            <input class="hide" type="button" id="inc_5" onclick="increaseZ(5)" value="#5 triangle +Z"/>
+            <input class="hide" type="button" id="dec_5" onclick="decreaseZ(5)" value="#5 triangle -Z"/>
+
+        </div>
+        
+        
     </div>
 
 
@@ -102,32 +167,9 @@
 
     <div style="display:flex; flex-direction: row;">
                 
-        <div>
-            <p>Rotation</p>
-        <label class="switch" >
-            <input type="checkbox" onclick="toggleRotation()">
-            <span class="slider round"></span>
-          </label>
-          <p id="rotation_button">OFF</p>
-        </div>
+    
 
-        <div>
-            <p>Polygon Offset</p>
-        <label class="switch" >
-            <input type="checkbox" onclick="toggleOffset()">
-            <span class="slider round"></span>
-          </label>
-          <p id="offset_button">OFF</p>
-        </div>
-
-        <div>
-            <p>Offset Status</p>
-        <label class="switch" >
-            <input type="checkbox" onclick="changeOffsetStatus()">
-            <span class="slider round"></span>
-          </label>
-          <p id="offsetStatus_button">Negative</p>
-        </div>
+        
 
 
     </div>
