@@ -79,10 +79,41 @@
 
 
     <div>
-        <input type="button" id="toggle_button" onclick="toggleRotation()" value="Rotation [ON]"/>
-        <input type="button" id="offset_button" onclick="toggleOffset()" value="Polygon Offset [ON]"/>
 
         <input type="button" value="Redraw" onClick="window.location.reload()">
+
+        
+    </div>
+
+    <div style="display:flex; flex-direction: row;">
+                
+        <div>
+            <p>Rotation</p>
+        <label class="switch" >
+            <input type="checkbox" onclick="toggleRotation()">
+            <span class="slider round"></span>
+          </label>
+          <p id="rotation_button">OFF</p>
+        </div>
+
+        <div>
+            <p>Polygon Offset</p>
+        <label class="switch" >
+            <input type="checkbox" onclick="toggleOffset()">
+            <span class="slider round"></span>
+          </label>
+          <p id="offset_button">OFF</p>
+        </div>
+
+        <div>
+            <p>Offset Status</p>
+        <label class="switch" >
+            <input type="checkbox" onclick="changeOffsetStatus()">
+            <span class="slider round"></span>
+          </label>
+          <p id="offsetStatus_button">Negative</p>
+        </div>
+
 
     </div>
 

@@ -119,9 +119,9 @@ var flag_rotation = 1;
 function toggleRotation()
 {
     draw_flag = false;
-    let button = document.getElementById("toggle_button");
-    if(button.value=="Rotation [ON]") button.value = "Rotation [OFF]"
-    else button.value = "Rotation [ON]"
+    let button = document.getElementById("rotation_button");
+    if(button.innerHTML=="OFF") button.innerHTML = "ON"
+    else button.innerHTML = "OFF"
 
 	flag_rotation ^= 1; 
 	console.log("flag_animation=", flag_rotation);
@@ -169,6 +169,7 @@ var secondZ = 0.0;
 var thirdZ = 0.0;
 
 var flag_offset=false;
+var flag_offset_status=false;
 
 function incFirstZ(){
     firstZ+=0.05;
@@ -178,11 +179,21 @@ function incFirstZ(){
 function toggleOffset(){
     
     let button = document.getElementById("offset_button");
-    if(button.value=="Polygon Offset [ON]") button.value = "Polygon Offset [OFF]"
-    else button.value = "Polygon Offset [ON]"
+    if(button.innerHTML=="OFF") button.innerHTML = "ON"
+    else button.innerHTML = "OFF"
 
     flag_offset =!flag_offset;
     console.log('Offset ->'+flag_offset);
+}
+
+function changeOffsetStatus(){
+    
+    let button = document.getElementById("offsetStatus_button");
+    if(button.innerHTML=="Negative") button.innerHTML = "Positive"
+    else button.innerHTML = "Negative"
+
+    flag_offset_status =!flag_offset_status;
+    console.log('Offset Status ->'+flag_offset_status);
 }
 
 function main() {
@@ -308,6 +319,8 @@ function loop(element, type){
     gl.disable(gl.POLYGON_OFFSET_FILL);  
 
     let count = element.vertexData.length;
+
+    let units = 1.0
 
     //drawArrays...
     gl.drawArrays(gl.POINTS, 0, count / 7); // 점 찍기
