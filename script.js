@@ -332,7 +332,7 @@ function loop(element, type){
         yRot = 0.0;
     }
 
-    mat4.rotateY(mMat, mMat, yRot); 
+    //mat4.rotateY(mMat, mMat, yRot); 
     //mat4.translate(mMat, mMat,[0.0, 0.0, one_Z, 0.0]);
     //mat4.lookAt(vMat, [1.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0]);
     //mat4.perspective(pMat, 3.64/2.0, 800.0/600.0, 0.5, 9);
@@ -367,13 +367,15 @@ function loop(element, type){
         unit = -1.0;
 
     //drawArrays...
-    gl.drawArrays(gl.POINTS, 0, count); // 점 찍기
+    //gl.drawArrays(gl.POINTS, 0, count); // 점 찍기
 
     if(count>=3){
-        //mat4.identity(mMat);  
-        //mat4.translate(mMat, mMat, [0.0, 0.0, one_Z, 0.0]);
-        //gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
+        mat4.identity(mMat);  
+        mat4.rotateY(mMat, mMat, yRot); 
+        mat4.translate(mMat, mMat, [0.0, 0.0, one_Z, 0.0]);
+        gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type, 0, 3);
+        gl.drawArrays(gl.POINTS, 0, 3);
     }
     
     if(flag_offset) // OFFSET 상태
@@ -381,22 +383,49 @@ function loop(element, type){
 
     if(count>=6){
         gl.polygonOffset(unit*0.1, unit*1.0); 
+
+        mat4.identity(mMat);  
+        mat4.rotateY(mMat, mMat, yRot); 
+        mat4.translate(mMat, mMat, [0.0, 0.0, two_Z, 0.0]);
+        gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type, 3, 3);
+        gl.drawArrays(gl.POINTS, 3, 3);
     }
     
     if(count>=9){
         gl.polygonOffset(unit*0.2, unit*1.0);
+
+        mat4.identity(mMat);  
+        mat4.rotateY(mMat, mMat, yRot); 
+        mat4.translate(mMat, mMat, [0.0, 0.0, three_Z, 0.0]);
+        gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type,6,3);
+        gl.drawArrays(gl.POINTS, 6, 3);
+
     }
 
     if(count>=12){
         gl.polygonOffset(unit*0.3, unit*1.0);
+
+        mat4.identity(mMat);  
+        mat4.rotateY(mMat, mMat, yRot); 
+        mat4.translate(mMat, mMat, [0.0, 0.0, four_Z, 0.0]);
+        gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type,9,3);
+        gl.drawArrays(gl.POINTS, 9, 3);
+
     }
 
     if(count>=15){
         gl.polygonOffset(unit*0.4, unit*1.0);
+
+        mat4.identity(mMat);  
+        mat4.rotateY(mMat, mMat, yRot); 
+        mat4.translate(mMat, mMat, [0.0, 0.0, five_Z, 0.0]);
+        gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat );
         gl.drawArrays(type,12,3);
+        gl.drawArrays(gl.POINTS, 12, 3);
+
     }
     
 
