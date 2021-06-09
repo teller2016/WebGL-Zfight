@@ -20,7 +20,8 @@
 
     <div style="display:flex; flex-direction:row;">
     
-        <div style="width:800">
+        <div style="width:800; text-align: center; ">
+            <div style="color:orangered">점을 찍어서 삼각형을 만들어 보세요!!!</div>
             <canvas id="canvas"style="border: none;" width="800" height="600"></canvas>
             <div id='warning' style="color: red; display: none;">삼각형은 5개까지만 생성 가능합니다!</div>
 
@@ -76,8 +77,8 @@
 
         </div>
 
-        <div>
-            <table style="text-align: center; margin-left: auto; margin-right:auto;" border="1">
+        <div style="margin-top: 100;">
+            <table style="text-align: center; margin-left: auto; margin-right:auto; width:800;" border="1">
             
                 <tr>
                     <td><label>Rotation</label></td>
@@ -91,6 +92,26 @@
                             </div>
                     </td>
                 </tr>
+                <tr >
+                    <td colspan="6" class="span">Rotation:</td>
+                </tr>
+
+                <tr>
+                    <td><label>Depth Test</label></td>
+                    <td>
+                        <div>
+                            <label class="switch" >
+                                <input type="checkbox" onclick="toggleDepthTest()">
+                                <span class="slider round"></span>
+                              </label>
+                              <p id="depthTest_button">OFF</p>
+                            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="span">Depth Test:</td>
+                </tr>
+
                 <tr>
                     <td><label>Polygon Offset</label></td>
                     <td>
@@ -114,73 +135,55 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Rotation</label></td>
-                    <td>
-                        <div>
-                            <label class="switch" >
-                                <input type="checkbox" onclick="toggleRotation()">
-                                <span class="slider round"></span>
-                              </label>
-                              <p id="rotation_button">OFF</p>
-                            </div>
+                    <td colspan="6" style="width: 800; text-align: left;">Polygon Offset:</td>
+                    
+                </tr>
+                <tr>
+                    <td colspan="6" class="span">Offset Status:</td>
+                    
+                </tr>
+                
+            
+
+                <tr style="height:60">
+                    <td><label>Translate Triangle's Z value</label></td>
+                    <td class="zButton">
+                        <input class="hide" type="button" id="inc_1" onclick="increaseZ(1)" value="#1 triangle +Z"/>
+                        <input class="hide" type="button" id="dec_1" onclick="decreaseZ(1)" value="#1 triangle -Z"/>
+                    </td>
+                    <td class="zButton">
+                        <input class="hide" type="button" id="inc_2" onclick="increaseZ(2)" value="#2 triangle +Z"/>
+                        <input class="hide" type="button" id="dec_2" onclick="decreaseZ(2)" value="#2 triangle -Z"/>
+                    </td>
+                    <td class="zButton">
+                        <input class="hide" type="button" id="inc_3" onclick="increaseZ(3)" value="#3 triangle +Z"/>
+                        <input class="hide" type="button" id="dec_3" onclick="decreaseZ(3)" value="#3 triangle -Z"/>
+                    </td>
+                    <td class="zButton">
+                        <input class="hide" type="button" id="inc_4" onclick="increaseZ(4)" value="#4 triangle +Z"/>
+                        <input class="hide" type="button" id="dec_4" onclick="decreaseZ(4)" value="#4 triangle -Z"/>
+                    </td>
+                    <td class="zButton">
+                        <input class="hide" type="button" id="inc_5" onclick="increaseZ(5)" value="#5 triangle +Z"/>
+                        <input class="hide" type="button" id="dec_5" onclick="decreaseZ(5)" value="#5 triangle -Z"/>
                     </td>
                 </tr>
-
                 <tr>
-                    <td><label>Translate Triangle's Z value</label></td>
-                    <td>
-
-                    </td>
+                    <td colspan="6" class="span">Translate Triangle's Z value:</td>
+            
                 </tr>
         
         
             </table>
 
+        
         </div>
         
 
 
     </div>
 
-    <div>
-        <div>
-            
-            
-            <input class="hide" type="button" id="inc_1" onclick="increaseZ(1)" value="#1 triangle +Z"/>
-            <input class="hide" type="button" id="dec_1" onclick="decreaseZ(1)" value="#1 triangle -Z"/>
-            
-            <input class="hide" type="button" id="inc_2" onclick="increaseZ(2)" value="#2 triangle +Z"/>
-            <input class="hide" type="button" id="dec_2" onclick="decreaseZ(2)" value="#2 triangle -Z"/>
-
-            <input class="hide" type="button" id="inc_3" onclick="increaseZ(3)" value="#3 triangle +Z"/>
-            <input class="hide" type="button" id="dec_3" onclick="decreaseZ(3)" value="#3 triangle -Z"/>
-
-            <input class="hide" type="button" id="inc_4" onclick="increaseZ(4)" value="#4 triangle +Z"/>
-            <input class="hide" type="button" id="dec_4" onclick="decreaseZ(4)" value="#4 triangle -Z"/>
-
-            <input class="hide" type="button" id="inc_5" onclick="increaseZ(5)" value="#5 triangle +Z"/>
-            <input class="hide" type="button" id="dec_5" onclick="decreaseZ(5)" value="#5 triangle -Z"/>
-
-        </div>
-        
-        
-    </div>
-
-
-    <div>
-
-
-        
-    </div>
-
-    <div style="display:flex; flex-direction: row;">
-                
     
-
-        
-
-
-    </div>
 
  
 </body>

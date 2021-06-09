@@ -6,6 +6,17 @@
     display: none;
 }
 
+.zButton{
+    width:100;
+}
+
+.span{
+    width:800;
+    text-align: left;
+    border-bottom-width:3px ;
+    border-bottom-color:black;
+}
+
 /* The switch - the box around the slider */
 .switch {
     position: relative;

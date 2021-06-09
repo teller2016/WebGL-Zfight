@@ -130,6 +130,20 @@ function toggleRotation()
 	console.log("flag_rotation=", flag_rotation);
 }
 
+var flag_depthTest = 1;
+function toggleDepthTest()
+{
+    let button = document.getElementById("depthTest_button");
+    if(button.innerHTML=="OFF") button.innerHTML = "ON"
+    else {
+        button.innerHTML = "OFF"
+        draw_flag=true;
+    }
+
+	flag_depthTest ^= 1; 
+	console.log("flag_depthTest=", flag_depthTest);
+}
+
 var yRot = 0.0;
 
 var triangle_color = 'red'; //RED, YELLOW, BLUE, GREEN
@@ -317,7 +331,11 @@ function loop(element, type){
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.clearDepth(1.0);	
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.enable(gl.DEPTH_TEST);	
+    
+    if(!flag_depthTest)
+        gl.enable(gl.DEPTH_TEST);	
+    else
+        gl.disable(gl.DEPTH_TEST);
 
     var mMatLocation = gl.getUniformLocation(gl.programObject, "mMat");
     //var vMatLocation = gl.getUniformLocation(gl.programObject, "vMat");
