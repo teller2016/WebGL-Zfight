@@ -72,11 +72,11 @@ function initialiseShaders() {
     var vertexShaderSource = `
 			attribute highp vec4 myVertex; 
             attribute highp vec4 myColor;
-			uniform mediump mat4 transformationMatrix; 
+			uniform mediump mat4 mMat; 
             varying highp vec4 col;
 			void main(void)  
 			{ 
-				gl_Position = transformationMatrix * myVertex; 
+				gl_Position = mMat * myVertex; 
                 gl_PointSize = 3.0;
                 col = myColor;
 			}`;
@@ -113,7 +113,7 @@ function initialiseShaders() {
     return testGLError("initialiseShaders");
 }
 
-var flag_animation = 1; 
+var flag_rotation = 1; 
 function toggleRotation()
 {
     draw_flag = false;
@@ -122,12 +122,11 @@ function toggleRotation()
     if(button.value=="Toggle Rotation [ON]") button.value = "Toggle Rotation [OFF]"
     else button.value = "Toggle Rotation [ON]"
 
-	flag_animation ^= 1; 
-	console.log("flag_animation=", flag_animation);
+	flag_rotation ^= 1; 
+	console.log("flag_animation=", flag_rotation);
 }
 
 var yRot = 0.0;
-
 
 var triangle_color = 'red'; //RED, YELLOW, BLUE, GREEN
 var draw_flag = true;
@@ -165,6 +164,14 @@ function changeRGBA(){
 
 }
 
+var firstZ = 0.0;
+var secondZ = 0.0;
+var thirdZ = 0.0;
+
+function incFirstZ(){
+    firstZ+=0.05;
+    console.log(firstZ);
+}
 
 function main() {
 
@@ -248,16 +255,18 @@ function loop(element, type){
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.enable(gl.DEPTH_TEST);	
 
-    var matrixLocation = gl.getUniformLocation(gl.programObject, "transformationMatrix");
-    var transformationMatrix = mat4.create();
+    var mMatLocation = gl.getUniformLocation(gl.programObject, "mMat");
+    var mMat = mat4.create();
 
-    mat4.rotateY(transformationMatrix, transformationMatrix, yRot); //수정 - y축으로 30도회전
+    mat4.rotateY(mMat, mMat, yRot); 
+    mat4.translate(mMat, mMat,[0.0, 0.0, firstZ, 0.0]);
 
-    if (flag_animation == 0){
+
+    if (flag_rotation == 0){
 		yRot += 0.01* 3;
 	}
 
-    gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);
+    gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat);
 
     if (!testGLError("gl.uniformMatrix4fv")) {
         return false;
@@ -277,6 +286,7 @@ function loop(element, type){
 
     gl.drawArrays(gl.POINTS, 0, element.vertexData.length / 7);
     gl.drawArrays(type, 0, element.vertexData.length / 7);
+
     if (!testGLError("gl.drawArrays")) {
         return false;
     }
