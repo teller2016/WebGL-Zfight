@@ -15,13 +15,14 @@
 <body onload="main()">
 
     <header>
-        <h1>Triangle Primitive with Z-fight</h1>
+        <h1>Draw Triangle And Z-fight!</h1>
     </header>
 
     <div style="display:flex; flex-direction:row;">
     
         <div style="width:800">
             <canvas id="canvas"style="border: none;" width="800" height="600"></canvas>
+            <div id='warning' style="color: red; display: none;">삼각형은 5개까지만 생성 가능합니다!</div>
 
         <table style="text-align: center; margin-left: auto; margin-right:auto;" border="1">
             
@@ -124,6 +125,13 @@
                             </div>
                     </td>
                 </tr>
+
+                <tr>
+                    <td><label>Translate Triangle's Z value</label></td>
+                    <td>
+
+                    </td>
+                </tr>
         
         
             </table>
@@ -136,7 +144,7 @@
 
     <div>
         <div>
-            <div id='warning' style="color: red; display: none;">삼각형은 5개까지만 생성 가능합니다!</div>
+            
             
             <input class="hide" type="button" id="inc_1" onclick="increaseZ(1)" value="#1 triangle +Z"/>
             <input class="hide" type="button" id="dec_1" onclick="decreaseZ(1)" value="#1 triangle -Z"/>

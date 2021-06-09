@@ -220,7 +220,7 @@ function changeOffsetStatus(){
 }
 
 function showButton(num){
-    if(num==0) return;
+    if(num==0 || num>=6) return;
     console.log(num);
 
     document.getElementById('inc_'+num).style.display='block';
