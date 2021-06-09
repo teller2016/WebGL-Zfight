@@ -73,6 +73,8 @@ function initialiseShaders() {
 			attribute highp vec4 myVertex; 
             attribute highp vec4 myColor;
 			uniform mediump mat4 mMat; 
+            //uniform mediump mat4 vMat;
+            //uniform mediump mat4 pMat;
             varying highp vec4 col;
 			void main(void)  
 			{ 
@@ -117,10 +119,9 @@ var flag_rotation = 1;
 function toggleRotation()
 {
     draw_flag = false;
-    console.log(draw_flag);
     let button = document.getElementById("toggle_button");
-    if(button.value=="Toggle Rotation [ON]") button.value = "Toggle Rotation [OFF]"
-    else button.value = "Toggle Rotation [ON]"
+    if(button.value=="Rotation [ON]") button.value = "Rotation [OFF]"
+    else button.value = "Rotation [ON]"
 
 	flag_rotation ^= 1; 
 	console.log("flag_animation=", flag_rotation);
@@ -135,7 +136,6 @@ var r = 1.0;
 var g = 0.0;
 var b = 0.0;
 var a = 1.0;
-
 function changeRGBA(){
     let red = document.getElementById('red');
     let green = document.getElementById('green');
@@ -168,9 +168,21 @@ var firstZ = 0.0;
 var secondZ = 0.0;
 var thirdZ = 0.0;
 
+var flag_offset=false;
+
 function incFirstZ(){
     firstZ+=0.05;
     console.log(firstZ);
+}
+
+function toggleOffset(){
+    
+    let button = document.getElementById("offset_button");
+    if(button.value=="Polygon Offset [ON]") button.value = "Polygon Offset [OFF]"
+    else button.value = "Polygon Offset [ON]"
+
+    flag_offset =!flag_offset;
+    console.log('Offset ->'+flag_offset);
 }
 
 function main() {
@@ -181,11 +193,12 @@ function main() {
     callEvent(canvas);
 
     canvas.addEventListener("click", function(event){
-        if(draw_flag)
-            callEvent(this, event, gl.TRIANGLES);
-        else
-            if(confirm('Clear Canvas?'))
-                window.location.reload()
+        callEvent(this, event, gl.TRIANGLES);
+        // if(draw_flag)
+        //     callEvent(this, event, gl.TRIANGLES);
+        // else
+        //     if(confirm('Clear Canvas?'))
+        //         window.location.reload()
     });
 
 
@@ -256,17 +269,25 @@ function loop(element, type){
     gl.enable(gl.DEPTH_TEST);	
 
     var mMatLocation = gl.getUniformLocation(gl.programObject, "mMat");
+    //var vMatLocation = gl.getUniformLocation(gl.programObject, "vMat");
+    //var pMatLocation = gl.getUniformLocation(gl.programObject, "pMat");
     var mMat = mat4.create();
-
-    mat4.rotateY(mMat, mMat, yRot); 
-    mat4.translate(mMat, mMat,[0.0, 0.0, firstZ, 0.0]);
-
+    //var vMat = mat4.create();
+    //var pMat = mat4.create();
 
     if (flag_rotation == 0){
 		yRot += 0.01* 3;
 	}
 
+    mat4.rotateY(mMat, mMat, yRot); 
+    mat4.translate(mMat, mMat,[0.0, 0.0, firstZ, 0.0]);
+    //mat4.lookAt(vMat, [1.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0]);
+    //mat4.perspective(pMat, 3.64/2.0, 800.0/600.0, 0.5, 9);
+
+
     gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat);
+    //gl.uniformMatrix4fv(vMatLocation, gl.FALSE, vMat );
+    //gl.uniformMatrix4fv(pMatLocation, gl.FALSE, pMat );
 
     if (!testGLError("gl.uniformMatrix4fv")) {
         return false;
@@ -284,8 +305,26 @@ function loop(element, type){
         return false;
     }
 
-    gl.drawArrays(gl.POINTS, 0, element.vertexData.length / 7);
-    gl.drawArrays(type, 0, element.vertexData.length / 7);
+    gl.disable(gl.POLYGON_OFFSET_FILL);  
+
+    let count = element.vertexData.length;
+
+    //drawArrays...
+    gl.drawArrays(gl.POINTS, 0, count / 7); // 점 찍기
+
+    gl.drawArrays(type, 0, 3);
+    
+    if(flag_offset)
+        gl.enable(gl.POLYGON_OFFSET_FILL);  
+    gl.polygonOffset(-0.1, -1.0); 
+    gl.drawArrays(type, 3, 3);
+
+    gl.polygonOffset(-0.2, -1.0);
+
+    gl.drawArrays(type,6,3);
+
+
+    //gl.drawArrays(type, 0, element.vertexData.length / 7);
 
     if (!testGLError("gl.drawArrays")) {
         return false;
