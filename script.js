@@ -121,7 +121,10 @@ function toggleRotation()
     draw_flag = false;
     let button = document.getElementById("rotation_button");
     if(button.innerHTML=="OFF") button.innerHTML = "ON"
-    else button.innerHTML = "OFF"
+    else {
+        button.innerHTML = "OFF"
+        draw_flag=true;
+    }
 
 	flag_rotation ^= 1; 
 	console.log("flag_animation=", flag_rotation);
@@ -171,6 +174,8 @@ var thirdZ = 0.0;
 var flag_offset=false;
 var flag_offset_status=false;
 
+var count = 0;
+
 function incFirstZ(){
     firstZ+=0.05;
     console.log(firstZ);
@@ -180,7 +185,9 @@ function toggleOffset(){
     
     let button = document.getElementById("offset_button");
     if(button.innerHTML=="OFF") button.innerHTML = "ON"
-    else button.innerHTML = "OFF"
+    else{
+        button.innerHTML = "OFF"
+    }
 
     flag_offset =!flag_offset;
     console.log('Offset ->'+flag_offset);
@@ -204,12 +211,13 @@ function main() {
     callEvent(canvas);
 
     canvas.addEventListener("click", function(event){
-        callEvent(this, event, gl.TRIANGLES);
-        // if(draw_flag)
-        //     callEvent(this, event, gl.TRIANGLES);
-        // else
-        //     if(confirm('Clear Canvas?'))
-        //         window.location.reload()
+        //callEvent(this, event, gl.TRIANGLES);
+        if(draw_flag)
+            callEvent(this, event, gl.TRIANGLES);
+        else
+            alert('To draw rotation needs to stop')
+                
+            
     });
 
 
@@ -288,7 +296,9 @@ function loop(element, type){
 
     if (flag_rotation == 0){
 		yRot += 0.01* 3;
-	}
+	}else{
+        yRot = 0.0;
+    }
 
     mat4.rotateY(mMat, mMat, yRot); 
     mat4.translate(mMat, mMat,[0.0, 0.0, firstZ, 0.0]);
@@ -318,7 +328,7 @@ function loop(element, type){
 
     gl.disable(gl.POLYGON_OFFSET_FILL);  
 
-    let count = element.vertexData.length / 7; //그릴 수 있는 vertex 개수
+    count = element.vertexData.length / 7; //그릴 수 있는 vertex 개수
 
     let unit = 1.0;
     if(!flag_offset_status) //offset negative인 경우
@@ -343,6 +353,15 @@ function loop(element, type){
         gl.drawArrays(type,6,3);
     }
 
+    if(count>=12){
+        gl.polygonOffset(unit*0.3, unit*1.0);
+        gl.drawArrays(type,9,3);
+    }
+
+    if(count>=15){
+        gl.polygonOffset(unit*0.4, unit*1.0);
+        gl.drawArrays(type,12,3);
+    }
     
 
 
