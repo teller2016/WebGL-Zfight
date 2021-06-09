@@ -56,7 +56,6 @@ function initialiseShaders() {
 			void main(void) 
 			{ 
                 gl_FragColor = col;
-				//gl_FragColor = vec4(1.0, 1.0, 0.66, 1.0); 
 			}`;
 
     gl.fragShader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -115,13 +114,13 @@ function initialiseShaders() {
 }
 
 var flag_animation = 1; 
-function toggleAnimation()
+function toggleRotation()
 {
     draw_flag = false;
     console.log(draw_flag);
     let button = document.getElementById("toggle_button");
-    if(button.value=="Toggle Rotate [ON]") button.value = "Toggle Rotate [OFF]"
-    else button.value = "Toggle Rotate [ON]"
+    if(button.value=="Toggle Rotation [ON]") button.value = "Toggle Rotation [OFF]"
+    else button.value = "Toggle Rotation [ON]"
 
 	flag_animation ^= 1; 
 	console.log("flag_animation=", flag_animation);
@@ -177,6 +176,9 @@ function main() {
     canvas.addEventListener("click", function(event){
         if(draw_flag)
             callEvent(this, event, gl.TRIANGLES);
+        else
+            if(confirm('Clear Canvas?'))
+                window.location.reload()
     });
 
 
