@@ -246,8 +246,7 @@ function main() {
 
     var canvas = document.getElementById("canvas");
 
-    // initialisze canvas
-    callEvent(canvas);
+    clickEvent(canvas);
 
     canvas.addEventListener("click", function(event){
         //callEvent(this, event, gl.TRIANGLES);
@@ -257,7 +256,7 @@ function main() {
                 document.getElementById('warning').style.display = 'block';
             }
             showButton(parseInt(count/3));
-            callEvent(this, event, gl.TRIANGLES);
+            clickEvent(this, event, gl.TRIANGLES);
 
         }
         else
@@ -275,7 +274,7 @@ function main() {
     })();
     
     (function renderLoop() {
-        if (loop(canvas,gl.TRIANGLES)) {
+        if (render(canvas,gl.TRIANGLES)) {
             requestAnimFrame(renderLoop);
         }
     })();
@@ -284,7 +283,7 @@ function main() {
 }
 
 
-function callEvent(element, event, type){
+function clickEvent(element, event, type){
     if (!initialiseGL(element)) {
         return;
     }
@@ -302,7 +301,9 @@ function callEvent(element, event, type){
 
         let canvasWidth = document.getElementById('canvas').width;
         let canvasHeight = document.getElementById('canvas').height;
-        
+        console.log(event.offsetX);
+        console.log(event.offsetY);
+
         x = event.offsetX - canvasWidth / 2;
         y = -event.offsetY + canvasHeight / 2;
 
@@ -318,7 +319,7 @@ function callEvent(element, event, type){
 
 }
 
-function loop(element, type){
+function render(element, type){
 
 
     // Generate a buffer object
