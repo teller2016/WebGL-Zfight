@@ -413,7 +413,7 @@ function render(element, type){
     }
     
     if(count>=9){
-        gl.polygonOffset(unit*0.2, unit*1.0);
+        gl.polygonOffset(unit*0.2, unit*2.0);
 
         mat4.identity(mMat);  
         mat4.rotateY(mMat, mMat, yRot); 
@@ -425,7 +425,7 @@ function render(element, type){
     }
 
     if(count>=12){
-        gl.polygonOffset(unit*0.3, unit*1.0);
+        gl.polygonOffset(unit*0.3, unit*3.0);
 
         mat4.identity(mMat);  
         mat4.rotateY(mMat, mMat, yRot); 
@@ -437,7 +437,7 @@ function render(element, type){
     }
 
     if(count>=15){
-        gl.polygonOffset(unit*0.4, unit*1.0);
+        gl.polygonOffset(unit*0.4, unit*4.0);
 
         mat4.identity(mMat);  
         mat4.rotateY(mMat, mMat, yRot); 
