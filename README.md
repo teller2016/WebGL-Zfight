@@ -186,8 +186,9 @@ Z-fight가 발생했을때 offset만큼 primitive의 depth값에 변화를 주�
 
 ## Reference
 
-- https://www.w3schools.com/howto/howto_css_switch.asp - Toggle Switch 스타일 사용
-- http://jun.hansung.ac.kr/CWP/htmls/html%20rgb%20colors.html - RGB값 지정 참고
+
+- http://jun.hansung.ac.kr/CWP/htmls/html%20rgb%20colors.html
 - https://git.ajou.ac.kr/hwan/webgl-tutorial/-/tree/master/student2020/better_project/201720761
 - https://git.ajou.ac.kr/hwan/webgl-tutorial/-/tree/master/student2020/better_project/201520998
+- https://www.w3schools.com/howto/howto_css_switch.asp
 - https://github.com/hwan-ajou/webgl-1.0/blob/main/PPT/webgl_09.pptx
